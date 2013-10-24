@@ -1,0 +1,79 @@
+//TABLE OF CONTENTS/////////////////
+////////////////////////////////////
+1. How To Manually Compile and Run NDK Project
+2. ADB Details
+3. The "android" Command
+4. Automatic and Continuous Integration
+5. Using Ecplise to Build NDK Projects
+6. Creating a Hybrid Java/C/C++ Project
+7. Working with Java Primitives
+
+//THE CONTENTS//////////////////////
+////////////////////////////////////
+1. How To Manually Compile and Run NDK Project
+1a. cd to project top dir
+1b. android update project -p . -t <api level>   //generate ant project files
+1c. ndk-build                                    //this is a wrapper Bash script around Make
+1d. ant install                                  //this one command is an automation tool, it runs javac, AAPT to package resources, and ADB to deploy on device
+1e. adb shell                                    //start up a shell on the debug bridge
+1f. am start -a android.intent.action.MAIN -n com.example.hellojni/com.example.hellojni.HelloJni    //an example of how to start up the sample helloJni project using AM (Activity Manager)
+1g. you now should see the app running on device
+
+note: in step "1f." the name is taken from AndroidManifest file under the attributes "package" and "activity android:name" of the main activity
+note: in step "1b." use "android list targets" to see available targets
+note: in step "1d." the command may file, but just specify a build type as per instructions in the error output
+
+2. ADB Details
+	-"adb shell" is a real Linus shell embedded in ADB client.
+	-To execute "adb shell" commands on host shell, an example to ls:  adb shell ls /sdcard/
+	-To retrieve the results back, example: adb shell "ls /nonexistantdir/ 1> /dev/null 2>&1; echo \$?"
+		redirection is necessary to avoid polluting the standard output.
+	-Here are some more interesting ADB cmds::
+		logcat      //display device log messages
+		dumpsys     //dump system state
+		dmesg       //dum kernel messages
+	-Other interesting ADB commands:
+		pull <device path> <local path>   //to transfer a file to your computer
+		push <local path> <device path>   //to transfer a file to your device/emulator
+		install <application package>     //to install an application pakage (.apk)
+		devices                           //to list connected devices and emulators
+		reboot                            //to restart an android device
+		wait-for-device                   //to sleep, until device/emulator is connected to computer (in a script)
+		start-server                      //to launch the ADB server communicating with devices
+		kill-server
+		bugreport                         //similar to dumpsys
+		help                              //ADB help options
+	-switches:
+		-s <device id>   //to target a specific device
+		-d               //to target current physical device
+		-e               //to target currently running emulator
+
+3. The "android" Command
+	3a. command to create new android projects: android create project <switches and options>
+		example: android create project -p ./MyProjectDir -n MyProject -t android-8 -k com.mypackage -a MyActivity
+	3b. command to upgrade an existing project, it is also used to create Ant project files from an existing source: android update project <switches and options>
+		example: see "1b."
+
+4. Automatic and Continuous Integration
+	See content 2. and 3., they can be scripted and automated
+
+5. Using Ecplise to Build NDK Projects
+	5.1 Create the Android project in Eclipse (should be straight forward)
+	5.2 Write the JNI functions on java side
+	5.3 Once 5.2 is complete, write the Android.mk file
+	5.4 Once 5.3 is complete, we can create a program configuration using Eclipse to auto generate a .h file for our jni functions using javah
+		5.4.1 this is done using Run->External Tools->External Tools Configurations...
+	5.5 Once the .h jni files are generated, proceed to creating the .c file
+	5.6 Once 5.5 is done, cd to project's top directory, we can now build using "ndk-build"
+	5.7 Proceed with running the app
+
+note: step 5.5 can be automated in Eclipse using File->New->Other->Convert to a C/C++ Project. See details in 6.
+
+6. Creating a Hybrid Java/C/C++ Project
+	6.1 Convert to a C/C++ Project option can be found in File->New->Other...
+	6.2 Select the project to be converted, choose MakeFile Project and Other Toolchain, make sure to decide between C or C++ in the radio dials, finish
+	6.3 in Project Properties, in C/C++ Build section, uncheck User default build command and enter ndk-build as the Build command
+		in the Behaviour tab, select Build on resource save, OK
+	6.4 in Builders section, place CDT Builder right above Android Package Builder, OK
+
+NOTE: 5.4 can be automated as well by creating a build similare in 6.4	
