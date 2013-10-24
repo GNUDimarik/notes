@@ -1,10 +1,12 @@
 The following are items related to GIT
-//////////////////////////////
-//TABLE OF CONTENTS://////////
+//use good-ol' vim to navigate this file :D
+******************************
+**TABLE OF CONTENTS:**********
+******************************
 1. Setting Up New GIT repos localy and pushing to GIT HUB
 
-//////////////////////////////
-//CONTENTS////////////////////
+******************************
+**CONTENTS********************
 1. Setting Up New GIT repos localy and pushing to GIT HUB
 BEGIN 1.
 1.1: mkdir <the_dir>; cd <the_dir>;
