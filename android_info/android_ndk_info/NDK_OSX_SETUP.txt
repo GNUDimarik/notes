@@ -1,0 +1,27 @@
+The following is a setup guide for Android NDK development on OSX.
+It's assumed that Eclipse and ADT plugin are already present.
+
+**TABLE OF CONTENTS******
+1. SDK and NDK setup
+2. Updating the NDK
+
+BEGIN: 1. SDK and NDK setup
+1. Download Apple developer tools (ie xcode), this includes utilities such as "make" among others.
+2. Java JDK 6 or higher required, check with: $javac -version
+3. Download and extract Android SDK from developer site. Extracted location will be referred as <Android_SDK_path> from here on.
+4. Append the following export lines to "~/.profile" (create new if necessary):
+	export ANDROID_SDK=<Android_SDK_path>
+	export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
+5. In Eclipse|Preferences, select Android on the left panel and Browse to locate and set the Android SDK root directory.
+6. Run "android" in terminal or open Android SDK Manager in Eclipse to download and install necessary tools.
+7. Download and extract Android NDK to <Android_NDK_path>
+8. Again, in ~/.profile:
+	export ANDROID_NDK=<Android_NDK_path>
+	export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$ANDROID_NDK
+9. Start a new terminal when .profile is edited, go to samples/hello-jni in the NDK directory, type "ndk-build", if build successful, then the NDK is set up correctly.
+END: 1. SDK and NDK setup
+
+BEGIN: 2. Updating the NDK
+1. download the latest NDK from the developer site
+2. re-point the exports in .profile to the new NDK directory
+END: 2. Updating the NDK

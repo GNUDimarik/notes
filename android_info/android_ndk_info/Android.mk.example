@@ -1,0 +1,9 @@
+#the following is a short template for a typical Android.mk file.
+#this file should be under the jni directory of an android project
+
+#hello is the compiled module name, ndk-build will output libhello.so
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+LOCAL_MODULE := hello
+LOCAL_SRC_FILES := hello.c
+include $(BUILD_SHARED_LIBRARY)
