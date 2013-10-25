@@ -8,6 +8,7 @@
 6. Creating a Hybrid Java/C/C++ Project
 7. Working with Java Primitives (TODO: not finished)
 8. Using javah to generate native .h files (continuation of 5.)
+9. A diagram of the relationship between Java code, Native code, and Android OS
 
 //THE CONTENTS//////////////////////
 ////////////////////////////////////
@@ -90,4 +91,11 @@ NOTE: 5.4 can be automated as well by creating a build similare in 6.4
 		for example:
 		$ javah -classpath ../bin/classes -o hello.h cookbook.chapter1.HelloNDKActivity
 	The .h files should now be generated.
+
+9. A diagram of the relationship between Java code, Native code, and Android OS
+	Java code  <-> DalvikVM[JNI] <-> Native Code
+						^				 ^
+						|-> Android OS <-|
+
+
 
